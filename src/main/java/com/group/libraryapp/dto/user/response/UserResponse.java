@@ -2,9 +2,11 @@ package com.group.libraryapp.dto.user.response;
 
 import com.group.libraryapp.domain.user.User;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
+@AllArgsConstructor
 public class UserResponse {
 
 	private long id;
