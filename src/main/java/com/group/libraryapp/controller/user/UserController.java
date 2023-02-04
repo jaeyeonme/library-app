@@ -2,7 +2,6 @@ package com.group.libraryapp.controller.user;
 
 import java.util.List;
 
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,14 +16,13 @@ import com.group.libraryapp.dto.user.request.UserUpdateRequest;
 import com.group.libraryapp.dto.user.response.UserResponse;
 import com.group.libraryapp.service.user.UserService;
 
+import lombok.RequiredArgsConstructor;
+
 @RestController
+@RequiredArgsConstructor
 public class UserController {
 
 	private final UserService userService;
-
-	public UserController(JdbcTemplate jdbcTemplate) {
-		this.userService = new UserService(jdbcTemplate);
-	}
 
 	@PostMapping("/user") // POST /user
 	public void saveUser(@RequestBody UserCreateRequest request) {
