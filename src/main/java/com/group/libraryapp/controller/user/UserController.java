@@ -2,6 +2,7 @@ package com.group.libraryapp.controller.user;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,15 +15,20 @@ import com.group.libraryapp.domain.user.Fruit;
 import com.group.libraryapp.dto.user.request.UserCreateRequest;
 import com.group.libraryapp.dto.user.request.UserUpdateRequest;
 import com.group.libraryapp.dto.user.response.UserResponse;
+import com.group.libraryapp.service.fruit.FruitService;
 import com.group.libraryapp.service.user.UserService;
 
-import lombok.RequiredArgsConstructor;
-
 @RestController
-@RequiredArgsConstructor
 public class UserController {
 
 	private final UserService userService;
+	private final FruitService fruitService;
+
+	public UserController(UserService userService, @Qualifier("main") FruitService fruitService) {
+		this.userService = userService;
+		this.fruitService = fruitService;
+	}
+
 
 	@PostMapping("/user") // POST /user
 	public void saveUser(@RequestBody UserCreateRequest request) {

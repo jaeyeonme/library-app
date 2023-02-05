@@ -3,13 +3,11 @@ package com.group.libraryapp.repository.user;
 import java.util.List;
 
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Repository;
 
 import com.group.libraryapp.dto.user.response.UserResponse;
 
 import lombok.RequiredArgsConstructor;
 
-@Repository
 @RequiredArgsConstructor
 public class UserRepository {
 
