@@ -1,4 +1,3 @@
 *.yml
-build/
-.gradle/
 .idea/
+/
