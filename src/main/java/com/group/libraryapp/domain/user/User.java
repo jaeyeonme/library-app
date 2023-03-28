@@ -3,6 +3,9 @@ package com.group.libraryapp.domain.user;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import com.group.libraryapp.domain.user.loanhistory.UserLoanHistory;
 
 import jakarta.persistence.CascadeType;
@@ -12,12 +15,14 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Getter
 @Entity
+@Getter
+@Table(name = "users")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class User {
 
@@ -25,8 +30,11 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id = null;
 
+	@NotNull
 	@Column(nullable = false, length = 20, name = "name")
 	private String name;
+
+	@Nullable
 	private Integer age;
 
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -45,7 +53,7 @@ public class User {
 	}
 
 	public void loanBook(String bookName) {
-		this.userLoanHistories.add(new UserLoanHistory(this, bookName));
+		this.userLoanHistories.add(new UserLoanHistory(this, bookName, false));
 	}
 
 	public void returnBook(String bookName) {

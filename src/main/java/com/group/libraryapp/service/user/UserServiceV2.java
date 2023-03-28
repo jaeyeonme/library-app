@@ -15,8 +15,8 @@ import com.group.libraryapp.dto.user.response.UserResponse;
 import lombok.RequiredArgsConstructor;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
-@Transactional(readOnly = true)
 public class UserServiceV2 {
 
 	private final UserRepository userRepository;
@@ -24,11 +24,11 @@ public class UserServiceV2 {
 	// 아래 있는 함수가 시작될 때 start transaction 을 해준다. (트랜잭션을 시작!)
 	// 함수가 예외 없이 잘 끝났다면 commit
 	// 혹시라도 문제가 있다면 rollback
-	@Transactional
 	public void saveUser(UserCreateRequest request) {
 		userRepository.save(new User(request.getName(), request.getAge()));
 	}
 
+	@Transactional(readOnly = true)
 	public List<UserResponse> getUsers() {
 		return userRepository.findAll()
 			.stream()
@@ -36,7 +36,6 @@ public class UserServiceV2 {
 			.collect(Collectors.toList());
 	}
 
-	@Transactional
 	public void updateUser(UserUpdateRequest request) {
 		// select * from user where id = ?;
 		User user = userRepository.findById(request.getId())
@@ -45,7 +44,6 @@ public class UserServiceV2 {
 		user.updateName(request.getName());
 	}
 
-	@Transactional
 	public void deleteUser(String name) {
 		// SELECT * FROM user WHERE name = ?
 		User user = userRepository.findByName(name)

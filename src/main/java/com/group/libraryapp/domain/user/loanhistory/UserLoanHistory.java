@@ -1,5 +1,7 @@
 package com.group.libraryapp.domain.user.loanhistory;
 
+import org.jetbrains.annotations.NotNull;
+
 import com.group.libraryapp.domain.user.User;
 
 import jakarta.persistence.Entity;
@@ -9,9 +11,11 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class UserLoanHistory {
 
@@ -19,17 +23,18 @@ public class UserLoanHistory {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id = null;
 
-	@ManyToOne
+	@ManyToOne @NotNull
 	@JoinColumn(nullable = false)
 	private User user;
 
+	@NotNull
 	private String bookName;
 	private boolean isReturn;
 
-	public UserLoanHistory(User user, String bookName) {
+	public UserLoanHistory(User user, String bookName, boolean isReturn) {
 		this.user = user; // User를 받아서 넣어준다.
 		this.bookName = bookName;
-		this.isReturn = false;
+		this.isReturn = isReturn;
 	}
 
 	public void doReturn() {

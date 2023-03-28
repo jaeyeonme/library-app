@@ -15,20 +15,18 @@ import com.group.libraryapp.dto.book.request.BookReturnRequest;
 import lombok.RequiredArgsConstructor;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
-@Transactional(readOnly = true)
 public class BookService {
 
 	private final BookRepository bookRepository;
 	private final UserLoanHistoryRepository userLoanHistoryRepository;
 	private final UserRepository userRepository;
 
-	@Transactional
 	public void saveBook(BookCreateRequest request) {
 		bookRepository.save(new Book(request.getName()));
 	}
 
-	@Transactional
 	public void loanBook(BookLoanRequest request) {
 		// 1. 책 정보를 가져온다.
 		Book book = bookRepository.findByName(request.getBookName())
@@ -48,7 +46,6 @@ public class BookService {
 		user.loanBook(book.getName());
 	}
 
-	@Transactional
 	public void returnBook(BookReturnRequest request) {
 		User user = userRepository.findByName(request.getUserName())
 			.orElseThrow(IllegalArgumentException::new);
